@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Aplicación de estudio basada en el cuadernillo Semana 05 de Cultura Digital.">
+  <title>Aula Digital · Semana 05</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Aula Digital, inicio">
+        <span class="brand-mark">AD</span>
+        <span><strong>Aula Digital</strong><small>Semana 05 · Cultura Digital</small></span>
+      </a>
+      <div class="top-actions">
+        <span class="save-status" id="saveStatus" aria-live="polite">Progreso local</span>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Cambiar tema de color" title="Cambiar modo claro/oscuro">☼</button>
+      </div>
+    </header>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <button class="nav-item active" data-view="home" type="button">Inicio</button>
+      <button class="nav-item" data-view="syllabus" type="button">Temario</button>
+      <button class="nav-item" data-view="progress" type="button">Mi progreso</button>
+    </nav>
+
+    <main id="mainContent">
+      <section class="view active" id="view-home" aria-labelledby="welcomeTitle">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">CUADERNILLO DE ESTUDIO</p>
+            <h1 id="welcomeTitle">Aprende. Practica. Recuerda.</h1>
+            <p class="hero-description">Repasa los contenidos del documento por tema y comprueba lo que ya dominas con preguntas que ajustan su dificultad a tus respuestas.</p>
+            <div class="hero-buttons">
+              <button class="button primary" id="startLearning" type="button">Comenzar a estudiar <span aria-hidden="true">→</span></button>
+              <button class="button secondary" id="continueLearning" type="button">Continuar donde me quedé</button>
+            </div>
+            <p class="source-note">Contenido basado únicamente en el PDF adjunto. No requiere conexión a internet.</p>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="hero-book"><span class="book-symbol">✦</span><strong>CD</strong><small>ESTUDIO</small></div>
+            <span class="float-chip chip-one">Aprender</span><span class="float-chip chip-two">Practicar</span><span class="float-chip chip-three">Avanzar</span>
+          </div>
+        </div>
+
+        <div class="stats-grid" id="homeStats" aria-label="Resumen de progreso"></div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow">TU RUTA</p><h2>Elige un bloque de estudio</h2></div>
+          <button class="text-button" data-go="syllabus" type="button">Ver todos los temas <span>→</span></button>
+        </div>
+        <div class="unit-grid" id="homeUnits"></div>
+
+        <section class="resume-panel" id="resumePanel">
+          <div class="resume-icon">↗</div>
+          <div><strong>Tu siguiente paso</strong><p id="resumeText">Elige un tema para comenzar a estudiar.</p></div>
+          <button class="button secondary small" id="resumeButton" type="button">Abrir tema</button>
+        </section>
+      </section>
+
+      <section class="view" id="view-syllabus" aria-labelledby="syllabusTitle">
+        <div class="page-heading">
+          <div><p class="eyebrow">CONTENIDO DEL DOCUMENTO</p><h1 id="syllabusTitle">Temario de estudio</h1><p>Selecciona un tema para leer el resumen, revisar tarjetas y comenzar una práctica.</p></div>
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="topicSearch" type="search" placeholder="Buscar un tema…" aria-label="Buscar tema"></label>
+        </div>
+        <div id="syllabusList" class="syllabus-list"></div>
+        <p id="noResults" class="empty-state hidden">No hay temas que coincidan con esa búsqueda.</p>
+      </section>
+
+      <section class="view" id="view-study" aria-labelledby="studyTitle">
+        <div class="study-topline"><button class="back-button" id="backToSyllabus" type="button">← Temario</button><span class="crumb" id="studyBreadcrumb">Unidad</span></div>
+        <div class="study-heading">
+          <div><p class="eyebrow" id="studyUnitLabel">UNIDAD</p><h1 id="studyTitle">Tema</h1><p id="studyIntro"></p></div>
+          <div class="topic-progress-mini"><span id="topicCompletion">0% completado</span><div class="mini-track"><span id="topicCompletionBar"></span></div></div>
+        </div>
+        <div class="study-tabs" role="tablist" aria-label="Secciones del tema">
+          <button class="study-tab active" data-study-tab="summary" role="tab" aria-selected="true" type="button">Resumen</button>
+          <button class="study-tab" data-study-tab="cards" role="tab" aria-selected="false" type="button">Tarjetas de memoria</button>
+          <button class="study-tab" data-study-tab="practice" role="tab" aria-selected="false" type="button">Práctica</button>
+        </div>
+        <div class="study-panel" id="studyPanel"></div>
+      </section>
+
+      <section class="view" id="view-quiz" aria-labelledby="quizTopicTitle">
+        <div class="quiz-topline"><button class="back-button" id="quitQuiz" type="button">← Salir del quiz</button><span class="quiz-tag" id="quizLevelTag">Nivel 1 · Básico</span></div>
+        <div class="quiz-progress-header"><div><p class="eyebrow" id="quizTopicLabel">TEMA</p><h1 id="quizTopicTitle">Práctica</h1></div><div class="quiz-count"><strong id="questionCounter">1 / 6</strong><span id="remainingCount">6 preguntas restantes</span></div></div>
+        <div class="quiz-progress-track"><span id="quizProgressBar"></span></div>
+        <div class="quiz-meta"><span id="quizSubtopic">Repaso del tema</span><span><b id="correctLive">0</b> aciertos <i>·</i> <b id="wrongLive">0</b> errores</span></div>
+        <article class="question-card" id="questionCard">
+          <div class="question-type" id="questionType">OPCIÓN MÚLTIPLE</div>
+          <h2 id="questionText">Pregunta</h2>
+          <div id="answerArea" class="answer-area"></div>
+          <div id="feedbackBox" class="feedback-box hidden" aria-live="polite"></div>
+          <div class="question-footer"><span id="questionLevel">Dificultad: básico</span><button id="submitAnswer" class="button primary" type="button" disabled>Comprobar respuesta</button><button id="nextQuestion" class="button primary hidden" type="button">Siguiente pregunta →</button></div>
+        </article>
+      </section>
+
+      <section class="view" id="view-results" aria-labelledby="resultsTitle">
+        <div class="results-hero"><div class="results-icon" id="resultsIcon">✓</div><p class="eyebrow">INTENTO TERMINADO</p><h1 id="resultsTitle">Resultados de la práctica</h1><p id="resultsSubtitle">Este es tu resumen de respuestas.</p><div class="score-ring" id="scoreRing"><strong id="scorePercent">0%</strong><span>aciertos</span></div></div>
+        <div class="results-stats" id="resultsStats"></div>
+        <div class="results-columns"><section class="result-section"><h2>Lo que conviene repasar</h2><div id="reviewTopics"></div></section><section class="result-section"><h2>Respuestas incorrectas</h2><div id="wrongAnswers"></div></section></div>
+        <div class="results-actions"><button class="button primary" id="retryQuiz" type="button">Nuevo intento</button><button class="button secondary" id="reviewAllErrors" type="button">Revisar errores</button><button class="button secondary" id="resultsToStudy" type="button">Volver al tema</button><button class="text-button" data-go="syllabus" type="button">Elegir otro tema →</button></div>
+      </section>
+
+      <section class="view" id="view-progress" aria-labelledby="progressTitle">
+        <div class="page-heading"><div><p class="eyebrow">SEGUIMIENTO PERSONAL</p><h1 id="progressTitle">Mi progreso</h1><p>Resultados guardados en este navegador.</p></div><button class="button danger-outline" id="clearProgress" type="button">Borrar progreso</button></div>
+        <div class="stats-grid progress-stats" id="progressStats"></div>
+        <div class="progress-card"><div class="section-heading compact"><div><p class="eyebrow">POR TEMA</p><h2>Dominio de los contenidos</h2></div><div class="legend"><span><i class="dot mastered"></i>Dominado ≥ 80%</span><span><i class="dot learning"></i>En proceso 50–79%</span><span><i class="dot pending"></i>Por reforzar &lt; 50%</span></div></div><div id="topicProgressList" class="topic-progress-list"></div></div>
+        <div class="history-card"><div class="section-heading compact"><div><p class="eyebrow">ACTIVIDAD RECIENTE</p><h2>Últimos intentos</h2></div></div><div id="attemptHistory"></div></div>
+      </section>
+    </main>
+    <footer class="app-footer"><span>Aula Digital · Semana 05</span><span>Hecho para estudiar sin conexión</span></footer>
+  </div>
+  <dialog id="confirmDialog" class="confirm-dialog"><form method="dialog"><div class="dialog-symbol">!</div><h2>Borrar todo el progreso</h2><p>Se eliminarán los intentos, los errores guardados y el avance de todos los temas en este navegador. Esta acción no se puede deshacer.</p><div class="dialog-actions"><button class="button secondary" value="cancel">Cancelar</button><button class="button danger" id="confirmClear" value="confirm">Sí, borrar progreso</button></div></form></dialog>
+</body>
+</html>
